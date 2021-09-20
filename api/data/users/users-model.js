@@ -30,8 +30,8 @@ async function findBy(filter) {
 
 async function findById(id) {
   const user = await db("users")
-    .select("users.id", "users.username", "users.name", "users.role")
-    .where("users.id", id)
+    .select("id", "username", "name", "role")
+    .where("id", id)
 
     const userTest = {
       id: user.id,
@@ -55,4 +55,4 @@ async function update(id, changes) {
     .then((count) => (count > 0 ? findById(id) : null));
 }
 
-module.exports = { add, find, findBy, update };
+module.exports = { add, find, findBy, update, findById };
