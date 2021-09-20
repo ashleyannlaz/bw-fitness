@@ -29,10 +29,9 @@ async function findBy(filter) {
 }
 
 async function findById(id) {
-  const user = await db("users as u")
-    .select("u.id", "u.username", "u.name", "u.role")
-    .where("u.id", id)
-    .first();
+  const user = await db("users")
+    .select("users.id", "users.username", "users.name", "users.role")
+    .where("users.id", id)
 
     const userTest = {
       id: user.id,
