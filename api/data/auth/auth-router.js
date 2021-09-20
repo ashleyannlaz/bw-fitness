@@ -2,9 +2,10 @@ const router = require("express").Router();
 const Users = require("../users/users-model");
 const helpers = require("./build-token");
 const bcrypt = require("bcryptjs");
+const { checkPayload } = require("./auth-middleware");
 
 // REGISTER NEW USER
-router.post("/register", async (req, res, next) => {
+router.post("/register", checkPayload, async (req, res, next) => {
   const {username, password, name, role} = req.body
   const hash = bcrypt.hashSync(password,8)  
   Users.add({username, password: hash,name, role})
@@ -15,7 +16,7 @@ router.post("/register", async (req, res, next) => {
 });
 
 // LOGIN USER
-router.post("/login", async (req, res, next) => {
+router.post("/login", checkPayload, async (req, res, next) => {
   try {
     const { username } = req.body;
     const [currentUser] = await Users.findBy({ username });
