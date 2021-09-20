@@ -17,6 +17,10 @@ server.use("/api/classes", classesRouter);
 server.use("/api/class", classRouter);
 server.use('/api/users', usersRouter)
 
+server.get('/', (req, res) => {
+  res.send('Hello, World!')
+})
+
 server.use((err, req, res, next) => {// eslint-disable-line
   res.status(err.status || 500).json({
     message: err.message,
