@@ -29,17 +29,17 @@ async function findBy(filter) {
 }
 
 async function findById(id) {
-  const user = await db("users")
-    .select("id", "username", "name", "role")
+  const [user] = await db("users")
     .where("id", id)
-
-    const userTest = {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      role: user.role === true ? "instructor" : "client",
-    };
-    return userTest;
+    .select("username", "name", "role", "id");
+  console.log(user)
+  const userTest = {
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    role: user.role === true ? "instructor" : "client",
+  };
+  return userTest;
 }
 
 async function add(user) {
