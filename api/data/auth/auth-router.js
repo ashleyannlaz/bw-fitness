@@ -5,10 +5,10 @@ const bcrypt = require("bcryptjs");
 const { checkPayload } = require("./auth-middleware");
 
 // REGISTER NEW USER
-router.post("/register", checkPayload, async (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   const {username, password, name, role} = req.body
   const hash = bcrypt.hashSync(password,8)  
-  Users.add({username, password: hash,name, role})
+  Users.add({name, username, password: hash, role})
     .then((user) => {
       res.status(201).json(user);
     })
