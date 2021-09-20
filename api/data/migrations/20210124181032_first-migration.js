@@ -1,10 +1,10 @@
 exports.up = async (knex) => {
   await knex.schema
     .createTable("users", (users) => {
-      users.increments("user_id");
-      users.string("user_name").notNullable();
-      users.string("user_username", 200).notNullable().unique();
-      users.string("user_password", 200).notNullable();
+      users.increments("id");
+      users.string("name").notNullable();
+      users.string("username", 200).notNullable().unique();
+      users.string("password", 200).notNullable();
       users.boolean("role").defaultTo(0);
     })
 
@@ -24,7 +24,7 @@ exports.up = async (knex) => {
         .integer("user_id")
         .unsigned()
         .notNullable()
-        .references("user_id")
+        .references("id")
         .inTable("users")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
