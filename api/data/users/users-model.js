@@ -32,6 +32,7 @@ async function findById(id) {
   const [user] = await db("users")
     .where("id", id)
     .select("username", "name", "role", "id");
+    console.log('User',user)
   console.log(user)
   const userTest = {
     id: user.id,
@@ -43,8 +44,7 @@ async function findById(id) {
 }
 
 async function add(user) {
-  const result = await db("users").insert(user);
-  const id = result[0];
+  const [id]= await db("users").insert(user, "id");
   return findById(id);
 }
 
