@@ -32,8 +32,6 @@ async function findById(id) {
   const [user] = await db("users")
     .where("id", id)
     .select("username", "name", "role", "id");
-    console.log('User',user)
-  console.log(user)
   const userTest = {
     id: user.id,
     name: user.name,
