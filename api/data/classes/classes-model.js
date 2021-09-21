@@ -51,7 +51,6 @@ async function add(classes) {
 
 // update class
 async function update(id, changes) {
-  console.log("changes", changes);
   return db("classes")
     .where("class_id", id)
     .update(changes)
@@ -60,9 +59,13 @@ async function update(id, changes) {
 
 //sign up for classes
 async function signUp(signup) {
-  const [user_id] = await db("class_attendees").insert(signup, "attendees_id");
-  console.log(user_id);
-  return user_id;
+  const [newSignup] = await db("class_attendees").insert(signup, "attendees_id");
+  const [classSignup] = await db("class_attendees")
+    .join("users", "class_attendees.user_id", "users.id")
+    .join('classes',"class_attendees.class_id", 'classes.class_id' )
+    .select("class_attendees.class_id", "class_attendees.user_id", 'users.name', 'classes.class_name')
+    .where("class_attendees.attendees_id", newSignup);
+  return classSignup;
 }
 
 // select class_attendees.class_id, users.name, classes.class_name
